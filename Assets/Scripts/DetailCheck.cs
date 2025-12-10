@@ -20,6 +20,19 @@ public class DetailCheck : MonoBehaviour
         if (!isSet) grabCollider.enabled = true;
     }
 
-    public void OnTriggerEnter(Collider _) => isSet = true;
-    public void OnTriggerExit(Collider _) => isSet = false;
+    public void OnTriggerEnter(Collider otherCollider)
+    {
+        if (!otherCollider.CompareTag("AssemblyTrigger"))
+        {
+            isSet = true;
+        }
+    }
+
+    public void OnTriggerExit(Collider otherCollider)
+    {
+        if (!otherCollider.CompareTag("AssemblyTrigger"))
+        {
+            isSet = false;
+        }
+    }
 }

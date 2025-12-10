@@ -14,6 +14,7 @@ public class AssemblyTimerManager : MonoBehaviour
     private float elapsedTime = 0f;
 
     public static AssemblyTimerManager Instance;
+    public VRKeyboardManager keyboardManager;
 
     void Awake()
     {
@@ -68,11 +69,18 @@ public class AssemblyTimerManager : MonoBehaviour
 
     public void SetRecord()
     {
-        Debug.Log($"Time: {elapsedTime}");
+        LeaderboardManager leaderboard = FindObjectOfType<LeaderboardManager>();
+    
+        if (elapsedTime <= 60f && leaderboard != null && leaderboard.IsRecordTime(elapsedTime))
+        {
+            keyboardManager.SetRecordTime(elapsedTime);
+            keyboardManager.ShowKeyboard();
+        }
     }
 
     public void AddDetail() 
     {
+        StartTimer();
         currentDetailsCount++;
         if (currentDetailsCount == 6)
         {
